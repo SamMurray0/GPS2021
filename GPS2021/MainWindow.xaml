@@ -1,0 +1,89 @@
+﻿<Window x:Class="GPS2021.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+        xmlns:local="clr-namespace:GPS2021"
+        mc:Ignorable="d"
+        Title="Simply NMEA Reader" Height="450" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="GPS Unit">
+        <StackPanel>
+            <Label>GPS Reader</Label>
+            <Button x:Name="doButton"  Click="onStart" Width="150" HorizontalAlignment="Left" Margin="5">Read From GPS</Button>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Width="100">Latitude:</Label>
+                <TextBox x:Name="lati" Width="150"></TextBox>
+                <TextBox x:Name="lati_v" Width="150"></TextBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label Width="100">Longitude:</Label>
+                <TextBox x:Name="longi" Width="150"></TextBox>
+                <TextBox x:Name="longi_v" Width="150"></TextBox>
+            </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Width="100">GPS Time:</Label>
+                        <TextBox x:Name="gpsDate" Width="150"></TextBox>
+                        <TextBox x:Name="gpsTime" Width="150"></TextBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Width="100">Space Vehicles in use:</Label>
+                        <TextBox x:Name="smallveh" Width="150"></TextBox>
+                        <TextBox x:Name="spaceVehicles" Width="150"></TextBox>
+                       
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label Width="100">Heights:</Label>
+                        <TextBox x:Name="Altitude" Width="150"></TextBox>
+                        <TextBox x:Name="GeoidalSeparation" Width="150"></TextBox>
+                        <TextBox x:Name="TotalHeight" Width="150"></TextBox>
+                    </StackPanel>
+
+                    <ComboBox x:Name="Serials" Width="120" HorizontalAlignment="Left"></ComboBox>
+           
+
+        </StackPanel>
+            </TabItem>
+   
+            <TabItem Header="Log" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+                <StackPanel>
+                    <Button Click="onTestBtn">Test</Button>
+                    <RichTextBox x:Name="RTB" Height="300" Background="AliceBlue">
+                        
+                    </RichTextBox>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Map">
+                <gmaps:GMapControl x:Name="MainMap" MouseMove="mapMouseMoved" Loaded="mapView_Loaded" MouseDown="MainMap_MouseDown" MouseUp="MainMap_MouseUp" />
+            </TabItem>
+
+            <TabItem Header="test">
+                <StackPanel Orientation="Vertical">
+                    <Button Click="btnAddMarker" Height="25" Margin="5">Add Marker</Button>
+                <Button Click="btnStartLogging" Height="25" Margin="5">Start Logging</Button>
+                    <Button Click="btnProcessSavedFile" Height="25" Margin="5">Process Saved File</Button>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Satellites">
+                <ScottPlot:WpfPlot x:Name="WpfPlot1" Width="800" Height="300"/>
+            </TabItem>
+            
+        </TabControl>
+
+        <StatusBar VerticalAlignment="Bottom" Height="30">
+            <StatusBarItem>
+            <Label x:Name="StatusText" VerticalAlignment="Top" Background="Red" Height="30" >Test</Label>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
