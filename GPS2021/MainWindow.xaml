@@ -53,7 +53,7 @@
         </StackPanel>
             </TabItem>
    
-            <TabItem Header="Log" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+            <TabItem Header="Log" Margin="-2,-2,-2,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Button Click="onTestBtn">Test</Button>
                     <RichTextBox x:Name="RTB" Height="300" Background="AliceBlue">
@@ -77,8 +77,11 @@
             <TabItem Header="Satellites">
                 <ScottPlot:WpfPlot x:Name="WpfPlot1" Width="800" Height="300"/>
             </TabItem>
-            
-        </TabControl>
+			<TabItem Header="Polar">
+				<local:PolarControl/>
+			</TabItem>
+
+		</TabControl>
 
         <StatusBar VerticalAlignment="Bottom" Height="30">
             <StatusBarItem>

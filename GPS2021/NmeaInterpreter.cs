@@ -49,21 +49,21 @@ namespace GPS2021
         public event VDOPReceivedEventHandler VDOPReceived;
         public event PDOPReceivedEventHandler PDOPReceived;
         #endregion
-
+        public bool initialised = false;
         public double latitude;
         public double longitude;
         public DateTime GPSTime;
         public GpggaMessage Gpgga = null;
-        public GsvParser gsvParser = null;
+        
         public GPVTGGpsSentence gpvtg = null;
         public GPGGAGpsSentence gpgga = null;
-        public GPGSVGpsSentence gpgsv = null;
+        //public GPGSVGpsSentence gpgsv = null;
 
         GPGSVGpsSentence[] gpgsvArray;
 
         public NmeaInterpreter()
         {
-            gpgsvArray = new GPGSVGpsSentence[5];
+            gpgsvArray = new GPGSVGpsSentence[9];
         }
 
       
@@ -82,8 +82,15 @@ namespace GPS2021
             switch (GetWords(sentence)[0])
             {
                 case "$GPGSV":
-                    gpgsv = new GPGSVGpsSentence(sentence);
-                    gpgsvArray[gpgsv.MessageNumber] = gpgsv;
+					GPGSVGpsSentence gpgsv = new GPGSVGpsSentence(sentence);
+                    if (gpgsv.MessageNumber == 1)
+                    {
+                        Array.Clear(gpgsvArray,0,gpgsvArray.Length);
+                    }
+                    Console.WriteLine("running");
+                    Console.WriteLine(gpgsv);
+                    gpgsvArray[gpgsv.MessageNumber-1] = gpgsv;
+                    initialised = true;
                     break;
 
                 case "$GPGGA":
@@ -142,6 +149,16 @@ namespace GPS2021
             }
 
             return true;
+        }
+
+        public int getNumSattelites()
+        {
+            return gpgsvArray[0].SatellitesInView;
+        }
+
+        public SatelliteInView[] getSattelites()
+        {
+            return gpgsvArray[0].Satellites;
         }
 
         // Divides a sentence into individual words
@@ -571,5 +588,7 @@ namespace GPS2021
             // Return the checksum formatted as a two-character hexadecimal
             return Checksum.ToString("X2");
         }
+
+
     } 
 }
