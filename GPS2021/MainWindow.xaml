@@ -78,7 +78,7 @@
                 <ScottPlot:WpfPlot x:Name="WpfPlot1" Width="800" Height="300"/>
             </TabItem>
 			<TabItem Header="Polar">
-				<local:PolarControl/>
+				<local:PolarControl x:Name="MyPolar"/>
 			</TabItem>
 
 		</TabControl>

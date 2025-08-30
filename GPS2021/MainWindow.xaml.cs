@@ -214,8 +214,40 @@ namespace GPS2021
         {
             string data = DataToPorcess;
             nmea.Parse(data);
+            if (nmea.gpgsvArray[0] != null)
+            {
+                int numOfMessages = nmea.gpgsvArray[0].NumberOfMessages;
+                if (nmea.gpgsvArray[numOfMessages - 1] != null)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        MyPolar.DeleteHistory();
+                    });
+					for (int i = 0; i < numOfMessages; i++)
+                    {
+                        if (nmea.gpgsvArray[i] != null)
+                        {
+                            GPGSVGpsSentence tempSatArray = nmea.gpgsvArray[i];
+							for (int j = 0; j < tempSatArray.Satellites.Length; j++)
+							{
+								this.Dispatcher.Invoke(() =>
+								{
+									MyPolar.AddSat(tempSatArray.Satellites[j]);
+								});
 
-            this.Dispatcher.Invoke(() =>
+							}
+						}
+                        
+                    }
+                }
+
+			}
+            for (int i = 0; i < 9; i++)
+            {
+				Console.WriteLine(nmea.gpgsvArray[i]);
+			}
+			//MyPolar.AddSat();
+			this.Dispatcher.Invoke(() =>
             {
 
                 // Console.WriteLine("Logged: " + data);

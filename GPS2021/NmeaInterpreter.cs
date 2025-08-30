@@ -59,7 +59,7 @@ namespace GPS2021
         public GPGGAGpsSentence gpgga = null;
         //public GPGSVGpsSentence gpgsv = null;
 
-        GPGSVGpsSentence[] gpgsvArray;
+        public GPGSVGpsSentence[] gpgsvArray;
 
         public NmeaInterpreter()
         {
@@ -153,6 +153,10 @@ namespace GPS2021
 
         public int getNumSattelites()
         {
+            while (gpgsvArray[0] == null)
+            {
+
+            }
             return gpgsvArray[0].SatellitesInView;
         }
 
